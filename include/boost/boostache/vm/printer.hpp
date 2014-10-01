@@ -45,12 +45,12 @@ namespace boost { namespace boostache { namespace vm { namespace ast
             out << "<render> : " << v.name << std::endl;;
          }
 
-         void operator()(for_each const & v) const
+         void operator()(for_each const &) const
          {
             out << "<for_each> : " << std::endl;;
          }
 
-         void operator()(condition const & v) const
+         void operator()(condition const &) const
          {}
 
          void operator()(if_then_else const & v) const

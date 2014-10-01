@@ -49,12 +49,12 @@ namespace boost { namespace boostache { namespace model { namespace ast
          {
             return s;
          }
-         std::string operator()(const stache_model& m) const
+         std::string operator()(const stache_model&) const
          {
             // TODO: Do something useful
             return "Oops.  Don't know how to format a stache model.\n";
          }
-         std::string operator()(const stache_model_vector& v) const
+         std::string operator()(const stache_model_vector&) const
          {
             return "Oops.  Don't know how to format a stache model vector.\n";
          }
@@ -91,12 +91,12 @@ namespace boost { namespace boostache { namespace model { namespace ast
             }
          }
 
-         void operator()(const fe::stache::ast::comment& c) const
+         void operator()(const fe::stache::ast::comment&) const
          {
             // Nothing to do.
          }
 
-         void operator()(const fe::stache::ast::partial& p) const
+         void operator()(const fe::stache::ast::partial&) const
          {
             // TODO:  Something.
          }

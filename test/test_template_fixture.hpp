@@ -63,7 +63,7 @@ public:
       boost::get<stache_model_vector>(model[section_tag]).push_back(model_item);
    }
 
-   void register_partial_template(const std::string& name, const std::string& template_string)
+   void register_partial_template(const std::string& /*name*/, const std::string& /*template_string*/)
    {
    }
 

@@ -15,7 +15,7 @@
 #include <functional>
 
 #include <boost/variant/apply_visitor.hpp>
-#include <boost/boostache/frontend/stache_model.hpp>
+#include <boost/boostache/model/stache_model.hpp>
 #include <boost/boostache/model/dynamic_model_printer.hpp>
 
 namespace boost { namespace boostache { namespace model
@@ -36,12 +36,12 @@ struct section_getter_visitor
         sink("<<<variable/function is not section>>>");
     }
 
-    void operator()(const std::vector<frontend::stache_variant> &model) const
+    void operator()(const std::vector<stache_variant> &model) const
     {
         sink(model);
     }
 
-    void operator()(const frontend::stache_model &model) const
+    void operator()(const stache_model &model) const
     {
         sink(std::array<decltype(&model), 1>{{&model}});
     }
@@ -67,12 +67,12 @@ struct variable_getter_visitor
         (*this)(function());
     }
 
-    void operator()(const std::vector<frontend::stache_variant> &) const
+    void operator()(const std::vector<stache_variant> &) const
     {
         sink("<<<vector of entries is not variable>>>");
     }
 
-    void operator()(const frontend::stache_model &) const
+    void operator()(const stache_model &) const
     {
         sink("<<<map of entries is not variable>>>");
     }
@@ -83,7 +83,7 @@ struct variable_getter_visitor
 } // namespace detail
 
 template <>
-void get_variable_value(const frontend::stache_model &model,
+void get_variable_value(const stache_model &model,
                         const std::string &key,
                         variable_sink &sink)
 {
@@ -96,16 +96,16 @@ void get_variable_value(const frontend::stache_model &model,
 
 // TODO(burlog): if variant change remove this specialization
 template <>
-void get_variable_value(const frontend::stache_variant &model,
+void get_variable_value(const stache_variant &model,
                         const std::string &key,
                         variable_sink &sink)
 {
-    auto m = boost::get<frontend::stache_model>(&model);
+    auto m = boost::get<stache_model>(&model);
     if (m) get_variable_value(*m, key, sink);
 }
 
 template <>
-void get_section_value(const frontend::stache_model &model,
+void get_section_value(const stache_model &model,
                        const std::string &key,
                        section_range_sink &sink)
 {
