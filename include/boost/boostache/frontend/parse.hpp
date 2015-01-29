@@ -29,7 +29,7 @@ namespace boost { namespace boostache { namespace frontend
       // TODO mjc : should throw with parse error location
       if(!boost::spirit::qi::phrase_parse( begin, end
                                          , grammar
-                                         , typename Format::skipper_t{}
+                                         , typename Format::skipper_t()
                                          , ast ))
       {
          ast = typename Format::ast_t{};

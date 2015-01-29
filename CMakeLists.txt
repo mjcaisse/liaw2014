@@ -6,7 +6,11 @@ set(Boost_USE_STATIC_LIBS OFF)
 set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
 find_package(Boost 1.53 COMPONENTS unit_test_framework)
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -DBOOST_SPIRIT_USE_PHOENIX_V3=1")
+
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -std=c++11 -Wall -Wextra -O0 -g")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -std=c++11 -Wall -Wextra -O3")
+
+add_definitions("-DBOOST_SPIRIT_USE_PHOENIX_V3=1")
 
 macro(add_boost_test name source)
 add_executable(${name} ${source})

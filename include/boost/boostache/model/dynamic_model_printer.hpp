@@ -86,8 +86,8 @@ parent_lookup_type make_parent_lookup(printer_type *printer)
 
 struct variable_sink: public boost::noncopyable
 {
-    variable_sink(std::ostream &out, frontend::stache::ast::variable const &v)
-        : out(out), v(v), printed(false)
+    explicit variable_sink(std::ostream &out)
+        : out(out), printed(false)
     {}
 
     template <typename variable_value_type>
@@ -101,7 +101,6 @@ struct variable_sink: public boost::noncopyable
 
 private:
     std::ostream &out;
-    const frontend::stache::ast::variable &v;
     bool printed;
 };
 
@@ -199,7 +198,7 @@ template <typename model_type>
 void detail::dynamic_model_printer<model_type>::operator()
     (frontend::stache::ast::variable const &v) const
 {
-    variable_sink sink(out, v);
+    variable_sink sink(out);
     get_variable_value(model, v.value, sink);
     if (!sink.isprinted())
     {

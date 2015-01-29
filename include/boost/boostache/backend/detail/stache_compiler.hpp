@@ -72,15 +72,15 @@ namespace boost { namespace boostache { namespace backend { namespace stache_com
             return if_block;
          }
 
-         vm::ast::node operator()(fe::stache::ast::comment const & v) const
+         vm::ast::node operator()(fe::stache::ast::comment const &) const
          {
             return vm::ast::literal{};
-         }         
+         }
 
-         vm::ast::node operator()(fe::stache::ast::partial const & v) const
+         vm::ast::node operator()(fe::stache::ast::partial const &) const
          {
             return vm::ast::literal{};
-         }         
+         }
 
          vm::ast::node operator()(fe::stache::ast::node_list const & nodes) const
          {

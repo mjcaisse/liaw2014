@@ -20,12 +20,13 @@
 BOOST_AUTO_TEST_CASE(test_default_simple_value)
 {
     // prepare model
-    namespace bfe = boost::boostache::frontend;
-    bfe::stache_model model;
+	namespace bmo = boost::boostache::model;
+    bmo::stache_model model;
     model["NAME"] = std::string("Muchomurka");
 
     // parse template
-    bfe::ast::stache_root ast = parse(
+    namespace bfe = boost::boostache::frontend;
+    bfe::stache::ast::root ast = parse(
             "Amanita in czech is {{NAME}}");
 
     // render and check
@@ -56,17 +57,18 @@ BOOST_AUTO_TEST_CASE(test_default_simple_value)
 BOOST_AUTO_TEST_CASE(test_parent_variable)
 {
     // prepare model
-    namespace bfe = boost::boostache::frontend;
-    bfe::stache_model model;
+    namespace bmo = boost::boostache::model;
+    bmo::stache_model model;
     model["EXCLAMATION"] = std::string("!");
 
-    bfe::stache_model mushroom;
+    bmo::stache_model mushroom;
     mushroom["NAME"] = std::string("Muchomurka Zelena");
 
     model["MUSHROOMS"] = mushroom;
 
     // parse template
-    bfe::ast::stache_root ast = parse(
+    namespace bfe = boost::boostache::frontend;
+    bfe::stache::ast::root ast = parse(
             "{{#MUSHROOMS}}{{NAME}}{{EXCLAMATION}}\n{{/MUSHROOMS}}");
 
     // render and check
@@ -78,16 +80,17 @@ BOOST_AUTO_TEST_CASE(test_parent_variable)
 BOOST_AUTO_TEST_CASE(test_single_obj_as_section)
 {
     // prepare model
-    namespace bfe = boost::boostache::frontend;
-    bfe::stache_model model;
+	namespace bmo = boost::boostache::model;
+    bmo::stache_model model;
 
-    bfe::stache_model mushroom;
+    bmo::stache_model mushroom;
     mushroom["NAME"] = std::string("Muchomurka Zelena");
 
     model["MUSHROOMS"] = mushroom;
 
     // parse template
-    bfe::ast::stache_root ast = parse(
+    namespace bfe = boost::boostache::frontend;
+    bfe::stache::ast::root ast = parse(
             "{{#MUSHROOMS}}{{NAME}}\n{{/MUSHROOMS}}");
 
     // render and check
@@ -99,23 +102,24 @@ BOOST_AUTO_TEST_CASE(test_single_obj_as_section)
 BOOST_AUTO_TEST_CASE(test_array_as_section)
 {
     // prepare model
-    namespace bfe = boost::boostache::frontend;
-    bfe::stache_model model;
+	namespace bmo = boost::boostache::model;
+    bmo::stache_model model;
 
-    bfe::stache_model_vector mushrooms;
+    bmo::stache_model_vector mushrooms;
 
-    bfe::stache_model mushroom1;
+    bmo::stache_model mushroom1;
     mushroom1["NAME"] = std::string("Muchomurka Zelena");
     mushrooms.push_back(mushroom1);
 
-    bfe::stache_model mushroom2;
+    bmo::stache_model mushroom2;
     mushroom2["NAME"] = std::string("Hrib Hnedy");
     mushrooms.push_back(mushroom2);
 
     model["MUSHROOMS"] = mushrooms;
 
     // parse template
-    bfe::ast::stache_root ast = parse(
+    namespace bfe = boost::boostache::frontend;
+    bfe::stache::ast::root ast = parse(
             "{{#MUSHROOMS}}{{NAME}}\n{{/MUSHROOMS}}");
 
     // render and check
@@ -128,11 +132,12 @@ BOOST_AUTO_TEST_CASE(test_array_as_section)
 BOOST_AUTO_TEST_CASE(test_single_obj_as_inv_section)
 {
     // prepare model
-    namespace bfe = boost::boostache::frontend;
-    bfe::stache_model model;
+	namespace bmo = boost::boostache::model;
+    bmo::stache_model model;
 
     // parse template
-    bfe::ast::stache_root ast = parse(
+    namespace bfe = boost::boostache::frontend;
+    bfe::stache::ast::root ast = parse(
             "{{#MUSHROOMS}}{{NAME}}\n{{/MUSHROOMS}}"
             "{{^MUSHROOMS}}No mushrooms\n{{/MUSHROOMS}}"
             );
@@ -146,13 +151,14 @@ BOOST_AUTO_TEST_CASE(test_single_obj_as_inv_section)
 BOOST_AUTO_TEST_CASE(test_single_obj_as_inv_empty_section)
 {
     // prepare model
-    namespace bfe = boost::boostache::frontend;
-    bfe::stache_model model;
-    bfe::stache_model_vector mushrooms;
+	namespace bmo = boost::boostache::model;
+    bmo::stache_model model;
+    bmo::stache_model_vector mushrooms;
     model["MUSHROOMS"] = mushrooms;
 
     // parse template
-    bfe::ast::stache_root ast = parse(
+    namespace bfe = boost::boostache::frontend;
+    bfe::stache::ast::root ast = parse(
             "{{#MUSHROOMS}}{{NAME}}\n{{/MUSHROOMS}}"
             "{{^MUSHROOMS}}No mushrooms\n{{/MUSHROOMS}}"
             );
@@ -165,21 +171,21 @@ BOOST_AUTO_TEST_CASE(test_single_obj_as_inv_empty_section)
 
 BOOST_AUTO_TEST_CASE(test_section_printing)
 {
-    namespace bfe = boost::boostache::frontend;
-    bfe::stache_model model;
+	namespace bmo = boost::boostache::model;
+    bmo::stache_model model;
 
-    bfe::stache_model user;
+    bmo::stache_model user;
     user["NAME"] = std::string("Bob");
     user["LOCATION"] = std::string("Earth");
 
-    bfe::stache_model_vector favorites;
+    bmo::stache_model_vector favorites;
 
-    bfe::stache_model favorite1;
+    bmo::stache_model favorite1;
     favorite1["FOOD"] = std::string("Pizza");
     favorite1["MUSIC"] = std::string("Classical");
     favorites.push_back(favorite1);
 
-    bfe::stache_model favorite2;
+    bmo::stache_model favorite2;
     favorite2["FOOD"] = std::string("Knedlik");
     favorite2["MUSIC"] = std::string("Folk");
     favorites.push_back(favorite2);
@@ -187,7 +193,8 @@ BOOST_AUTO_TEST_CASE(test_section_printing)
     user["FAVORITES"] = favorites;
     model["USER"] = user;
 
-    bfe::ast::stache_root ast = parse(
+    namespace bfe = boost::boostache::frontend;
+    bfe::stache::ast::root ast = parse(
             "{{#USER}}"
             "user.name={{NAME}}\n"
             "user.location={{LOCATION}}\n"
